@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect, useCallback} from 'react';
 import {
   View,
@@ -14,9 +13,9 @@ import {RootState, AppDispatch, useAppDispatch} from '../../redux/store';
 import styles from './styles';
 import Colors from '../../constants/Colors';
 import {useTranslation} from 'react-i18next';
-import ListView from '../../components/ListView';
+import ListItem from '../../components/ListItem';
 
-type MovieType = {title: string; id: number; poster_path: string};
+// type MovieType = {title: string; id: number; poster_path: string};
 interface MovieItem {
   title: string | null;
   poster_path: string;
@@ -26,33 +25,33 @@ interface MovieItem {
 const HomeScreen: React.FC = () => {
   const {i18n} = useTranslation();
   const [page, setPage] = useState(1);
-  const [movieList, setMovieList] = useState<MovieType[]>([]);
+  // const [movieList, setMovieList] = useState<MovieType[]>([]);
   const dispatch: AppDispatch = useAppDispatch();
   const movies = useSelector((state: RootState) => state.moviesData.movies);
   const loading = useSelector((state: RootState) => state.moviesData.loading);
+  const lastPage = useSelector((state: RootState) => state.moviesData.lastPage);
   const error = useSelector((state: RootState) => state.moviesData.error);
 
   useEffect(() => {
-    setMovieList([...movieList, ...movies]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [movies]);
-
-  useEffect(() => {
-    if (!loading) {
+    console.log('page > lastPage', page, lastPage);
+    if (page > lastPage) {
       dispatch(fetchPopularMovie({language: i18n.language, page: page}));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, page]);
+  }, [dispatch, page, i18n.language, lastPage]);
 
   const fetchMoviesData = () => {
     if (!loading) {
-      setPage(page + 1);
+      if (page !== lastPage && page === 1) {
+        setPage(lastPage + 1);
+      } else {
+        setPage(page + 1);
+      }
     }
   };
 
   const renderItem: ListRenderItem<MovieItem> = useCallback(
     ({item}: {item: MovieItem}) => {
-      return <ListView title={item?.title} poster_path={item?.poster_path} />;
+      return <ListItem title={item?.title} poster_path={item?.poster_path} />;
     },
     [],
   );
@@ -65,7 +64,7 @@ const HomeScreen: React.FC = () => {
       )}
 
       <FlatList
-        data={movieList}
+        data={movies}
         numColumns={2}
         showsVerticalScrollIndicator={false}
         renderItem={renderItem}

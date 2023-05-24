@@ -1,7 +1,7 @@
 import {View, TextInput} from 'react-native';
 import React from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import styles from './CommonStyle';
+import styles from '../style/CommonStyle';
 import Colors from '../constants/Colors';
 
 const CustomTextInput = ({

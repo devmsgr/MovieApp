@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {SafeAreaView, View, Text} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+
 import {signIn} from '../../redux/reducer/userSlice';
 import styles from './styles';
 import CustomTextInput from '../../components/CustomTextInput';
@@ -10,6 +11,7 @@ import Header from '../../components/LanguageToggle';
 import Colors from '../../constants/Colors';
 import {useTranslation} from 'react-i18next';
 import CustomButton from '../../components/CustomButton';
+import Route from '../../constants/Route';
 
 const LoginScreen = ({navigation}: {navigation: any}) => {
   const [userName, setUserName] = useState('');
@@ -17,6 +19,12 @@ const LoginScreen = ({navigation}: {navigation: any}) => {
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [error, setError] = useState('');
   const {t} = useTranslation();
+  const {user} = useSelector((state: any) => state.userData);
+  useEffect(() => {
+    if (user?.isLoggedIn) {
+      navigation.navigate(Route.HOME);
+    }
+  }, [navigation, user]);
 
   useEffect(() => {
     setShowErrorMessage(false);
@@ -31,7 +39,6 @@ const LoginScreen = ({navigation}: {navigation: any}) => {
     } else {
       setError(message);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userName, password]);
 
   const dispatch = useDispatch();
@@ -45,7 +52,6 @@ const LoginScreen = ({navigation}: {navigation: any}) => {
 
   const onLoginButtonPress = () => {
     if (error.length === 0) {
-      navigation.replace('Home');
       dispatch(signIn({userName, password}));
     } else {
       setShowErrorMessage(true);

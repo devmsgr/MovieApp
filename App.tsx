@@ -3,22 +3,19 @@ import {Provider} from 'react-redux';
 import {persistor, store} from './src/redux/store';
 import {PersistGate} from 'redux-persist/integration/react';
 
-import {NavigationContainer} from '@react-navigation/native';
-
-import AuthStack from './src/navigation/AuthStack';
-
+import RootContainer from './src/navigation/RootContainer';
 import './src/i18n';
 import {LogBox} from 'react-native';
-LogBox.ignoreAllLogs(); //Ignore all log notifications
+LogBox.ignoreLogs([
+  'redux-persist failed to create sync storage. falling back to noop storage. ',
+]);
 function App() {
   return (
-    <NavigationContainer>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <AuthStack />
-        </PersistGate>
-      </Provider>
-    </NavigationContainer>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <RootContainer />
+      </PersistGate>
+    </Provider>
   );
 }
 

@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import i18n from 'i18next';
 import {initReactI18next} from 'react-i18next';
 import {I18nManager} from 'react-native';
@@ -6,7 +5,6 @@ import {I18nManager} from 'react-native';
 const resources = {
   ar: {
     translation: {
-      // eslint-disable-next-line prettier/prettier
       Email: 'بريد إلكتروني',
       Password: 'كلمة المرور',
       Login: 'تسجيل الدخول',

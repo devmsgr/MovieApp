@@ -1,9 +1,9 @@
 import {View, Text, Image} from 'react-native';
 import React from 'react';
 import Strings from '../constants/Strings';
-import styles from './CommonStyle';
+import styles from '../style/CommonStyle';
 
-const ListView = ({
+const ListItem = ({
   title,
   poster_path,
 }: {
@@ -24,4 +24,4 @@ const ListView = ({
   );
 };
 
-export default ListView;
+export default ListItem;

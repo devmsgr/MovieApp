@@ -49,10 +49,24 @@ const styles = StyleSheet.create({
   },
   labelStyles: {
     fontSize: 14,
-    fontFamily: 'Roboto-Regular',
     color: Colors.WHITE,
     textAlign: 'left',
     justifyContent: 'center',
+  },
+  disableButton: {backgroundColor: 'grey'},
+  label: {
+    textAlign: 'center',
+    fontWeight: '700',
+    fontSize: 16,
+    color: Colors.WHITE,
+  },
+  container: {
+    backgroundColor: Colors.BLUE,
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 30,
+    marginTop: 20,
+    width: '100%',
   },
 });
 export default styles;

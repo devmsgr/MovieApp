@@ -1,6 +1,6 @@
 import {View, Text} from 'react-native';
 import React from 'react';
-import commonStyles from './CommonStyle';
+import commonStyles from '../style/CommonStyle';
 
 const ErrorText = ({errorMessage}: {errorMessage: string}) => {
   return (
